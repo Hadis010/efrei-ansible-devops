@@ -1,0 +1,5 @@
+---
+db_name: todos_db
+db_user: todos_user
+db_password: todos_pass
+db_host: localhost
