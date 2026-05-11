@@ -1,3 +1,8 @@
 ---
-
-# Configuration spécifique au host de Dev
+db_name: todos_db
+db_user: todos_user
+db_password: todos_pass
+db_host: localhost
+app_port: 3000
+nginx_port: 80
+nginx_server_name: localhost
