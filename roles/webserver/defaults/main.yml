@@ -1,0 +1,4 @@
+---
+nginx_server_name: localhost  # Nom de domaine du virtual host nginx
+app_port: 3000                # Port de l'API vers lequel nginx proxifie
+nginx_port: 80                # Port d'écoute nginx (HTTP)
