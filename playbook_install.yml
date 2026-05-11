@@ -1,15 +1,10 @@
 ---
-
-- name: Installation de la base de données mysql
-  hosts: database
+- name: Deploy Todos API stack
+  hosts: devops_dev
   become: true
 
-- name: Install applicative server
-  hosts: api
-  become: true
-
-- name: Installation de nginx
-  hosts: nginx
-  become: true
   roles:
-    - { role: geerlingguy.nginx, tags: [ "nginx" ] }
+    - role: database
+    - role: runtime
+    - role: app
+    - role: webserver
