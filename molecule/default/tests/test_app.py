@@ -1,16 +1,26 @@
-import os
+def test_mysql_running(host):
+    mysql = host.service("mysql")
+    assert mysql.is_running
+    assert mysql.is_enabled
 
-import testinfra.utils.ansible_runner
+def test_nodejs_installed(host):
+    node = host.run("node --version")
+    assert node.rc == 0
 
-testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
-    os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
+def test_todos_api_running(host):
+    service = host.service("todos-api")
+    assert service.is_running
+    assert service.is_enabled
 
+def test_todos_api_responds(host):
+    response = host.run("curl -s http://localhost:3000/todos")
+    assert response.rc == 0
 
-def test_nginx_running_and_enabled(host):
-    app_service = host.service("nginx")
-    assert app_service.is_running
-    assert app_service.is_enabled
+def test_nginx_running(host):
+    nginx = host.service("nginx")
+    assert nginx.is_running
+    assert nginx.is_enabled
 
-
-def test_nginx_listening(host):
-    assert host.socket("tcp://0.0.0.0:8080").is_listening
+def test_nginx_proxy(host):
+    response = host.run("curl -s http://localhost:80/todos")
+    assert response.rc == 0
