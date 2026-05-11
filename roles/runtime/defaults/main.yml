@@ -1,2 +1,2 @@
 ---
-nodejs_version: "20"
+nodejs_version: "20"  # Version LTS de Node.js à installer via NodeSource

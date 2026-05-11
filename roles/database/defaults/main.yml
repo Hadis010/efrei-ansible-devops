@@ -1,5 +1,5 @@
 ---
-db_name: todos_db
-db_user: todos_user
-db_password: todos_pass
-db_host: localhost
+db_name: todos_db       # Nom de la base de données MySQL
+db_user: todos_user     # Utilisateur MySQL de l'application
+db_password: todos_pass # Mot de passe MySQL
+db_host: localhost      # Hôte MySQL
