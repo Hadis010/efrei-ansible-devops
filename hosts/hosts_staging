@@ -1,0 +1,9 @@
+[web]
+devops-dev-1 ansible_host=172.21.80.1 ansible_port=2222
+
+[db]
+devops-dev-1 ansible_host=172.21.80.1 ansible_port=2222
+
+[devops_staging:children]
+web
+db

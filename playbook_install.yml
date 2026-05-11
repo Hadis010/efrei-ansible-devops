@@ -1,6 +1,6 @@
 ---
 - name: Deploy Todos API stack
-  hosts: devops_dev
+  hosts: all
   become: true
 
   roles:

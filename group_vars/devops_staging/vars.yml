@@ -1,0 +1,8 @@
+---
+db_name: todos_staging
+db_user: todos_staging_user
+db_password: "{{ vault_db_password }}"
+db_host: localhost
+app_port: 3001
+nginx_port: 8080
+nginx_server_name: staging.todos.local
