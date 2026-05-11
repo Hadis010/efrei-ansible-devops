@@ -1,0 +1,18 @@
+[Unit]
+Description=Todos API
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User={{ app_user }}
+WorkingDirectory={{ app_dir }}
+Environment=APP_PORT={{ app_port }}
+Environment=DB_HOST={{ db_host }}
+Environment=DB_USER={{ db_user }}
+Environment=DB_PASSWORD={{ db_password }}
+Environment=DB_NAME={{ db_name }}
+ExecStart=/usr/bin/node {{ app_dir }}/app.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

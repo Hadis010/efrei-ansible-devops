@@ -1,0 +1,8 @@
+---
+app_dir: /opt/todos-api  # Répertoire d'installation de l'application
+app_port: 3000           # Port d'écoute de l'API Node.js
+app_user: vagrant        # Utilisateur système propriétaire des fichiers
+db_host: localhost       # Hôte de la base de données
+db_user: todos_user      # Utilisateur MySQL
+db_password: todos_pass  # Mot de passe MySQL 
+db_name: todos_db        # Nom de la base de données
