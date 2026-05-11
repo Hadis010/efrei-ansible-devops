@@ -21,8 +21,8 @@ platforms:
     box: onlyoffice/base-ubuntu2404
     memory: 2048
     cpus: 1
-#    provider_options:
-#      gui: true # Peut être nécessaire pour Windows (WSL)
+    provider_options:
+      gui: true
     provider_override_args:
       - "vm.provision 'shell', inline: 'apt update'"
       - "vm.provision 'shell', inline: 'locale-gen fr_FR'"
