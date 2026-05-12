@@ -1,0 +1,5 @@
+---
+postfix_hostname: localhost        # Nom du serveur mail
+postfix_domain: todos.local        # Domaine des emails envoyés
+postfix_relay_host: ""             # Serveur relais 
+postfix_smtp_port: 25              # Port SMTP standard

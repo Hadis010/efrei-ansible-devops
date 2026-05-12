@@ -1,0 +1,24 @@
+# {{ ansible_managed }}
+smtpd_banner = $myhostname ESMTP $mail_name
+biff = no
+append_dot_mydomain = no
+readme_directory = no
+
+# TLS parameters
+smtpd_use_tls = no
+
+# Network
+myhostname = {{ postfix_hostname }}
+mydomain = {{ postfix_domain }}
+myorigin = $mydomain
+inet_interfaces = loopback-only
+inet_protocols = ipv4
+mydestination = $myhostname, localhost.$mydomain, localhost
+
+# Relay
+relayhost = {{ postfix_relay_host }}
+mynetworks = 127.0.0.0/8
+
+# Mailbox
+mailbox_size_limit = 0
+recipient_delimiter = +
