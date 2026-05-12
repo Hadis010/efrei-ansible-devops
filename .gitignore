@@ -6,6 +6,7 @@ roles/*
 !roles/webserver/
 !roles/maildev/
 !roles/postfix/
+!roles/backup/
 .vagrant
 *.retry
 .virtualenv
