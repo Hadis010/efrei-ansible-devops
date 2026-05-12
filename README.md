@@ -53,6 +53,7 @@ molecule destroy     # Supprimer la VM
 
 ## Structure du projet
 
+```bash
 efrei-ansible-devops/
 ├── playbook_install.yml       # Playbook principal
 ├── hosts/
@@ -73,6 +74,7 @@ efrei-ansible-devops/
 │   └── certbot/               # Certificat TLS Let's Encrypt
 └── molecule/
 └── default/               # Tests Molecule + Testinfra
+```
 
 ## Bonus implémentés
 
