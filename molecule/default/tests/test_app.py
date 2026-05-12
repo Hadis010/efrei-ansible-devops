@@ -37,3 +37,12 @@ def test_maildev_smtp_port(host):
 def test_maildev_web_port(host):
     port = host.socket("tcp://0.0.0.0:1080")
     assert port.is_listening
+
+def test_postfix_running(host):
+    service = host.service("postfix")
+    assert service.is_running
+    assert service.is_enabled
+
+def test_postfix_smtp_port(host):
+    port = host.socket("tcp://127.0.0.1:25")
+    assert port.is_listening
