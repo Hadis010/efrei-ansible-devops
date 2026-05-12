@@ -8,6 +8,7 @@
     - role: runtime
     - role: app
     - role: webserver
+    - role: maildev
 
 # Environnement staging
 - name: Deploy Todos API stack (staging)
@@ -18,3 +19,4 @@
     - role: runtime
     - role: app
     - role: webserver
+    - role: maildev

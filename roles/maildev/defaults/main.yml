@@ -1,0 +1,4 @@
+---
+maildev_port_smtp: 1025   # Port SMTP que l'app utilise pour envoyer des emails
+maildev_port_web: 1080    # Port de l'interface web pour visualiser les emails
+maildev_user: vagrant     # Utilisateur système qui lance maildev

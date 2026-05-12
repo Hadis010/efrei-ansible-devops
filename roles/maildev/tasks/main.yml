@@ -1,0 +1,34 @@
+---
+- name: Install maildev via npm globally
+  community.general.npm:
+    name: maildev
+    global: true
+    state: present
+
+- name: Deploy maildev systemd service
+  ansible.builtin.template:
+    src: maildev.service.j2
+    dest: /etc/systemd/system/maildev.service
+    mode: '0644'
+  notify: restart maildev
+
+- name: Enable and start maildev service
+  ansible.builtin.systemd:
+    name: maildev
+    state: started
+    enabled: true
+    daemon_reload: true
+
+- name: Deploy nginx configuration for maildev
+  ansible.builtin.template:
+    src: nginx-maildev.conf.j2
+    dest: /etc/nginx/sites-available/maildev
+    mode: '0644'
+  notify: restart nginx
+
+- name: Enable maildev nginx site
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/maildev
+    dest: /etc/nginx/sites-enabled/maildev
+    state: link
+  notify: restart nginx

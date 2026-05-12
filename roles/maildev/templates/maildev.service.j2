@@ -1,0 +1,12 @@
+[Unit]
+Description=Maildev SMTP Server
+After=network.target
+
+[Service]
+Type=simple
+User={{ maildev_user }}
+ExecStart=/usr/bin/maildev --smtp {{ maildev_port_smtp }} --web {{ maildev_port_web }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
