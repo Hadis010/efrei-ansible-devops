@@ -1,104 +1,104 @@
-# TP DevOps - Ansible
+# TP DevOps Ansible S8 — Todos API
 
-Projet d'exemple pour la prise en main d'Ansible dans un contexte DevOps.
-Il illustre le déploiement automatisé d'une stack applicative (base de données, serveur API, reverse proxy Nginx) à l'aide de playbooks Ansible et de l'outil de test Molecule.
+Déploiement automatisé d'une stack web complète avec Ansible.
+
+## Membres
+
+- Hafsa Dini
+- Vainepuana Lemaire
+
+## Application déployée
+
+Une API REST de gestion de tâches (Todos) construite avec **Node.js/Express** et **MySQL**.
+
+Elle expose 4 endpoints HTTP :
+- `GET /todos` — lister toutes les tâches
+- `POST /todos` — créer une tâche
+- `PUT /todos/:id` — modifier une tâche
+- `DELETE /todos/:id` — supprimer une tâche
 
 ## Prérequis
 
-Avant de commencer, assurez-vous d'avoir installé les outils suivants sur votre machine :
+- Python 3.12+
+- VirtualBox 7.0+
+- Vagrant 2.4+
+- WSL2 (pour les Windows)
 
-- [Python 3.12](https://www.python.org/download/)
-  ```bash
-  sudo apt-get install python3 python3-pip
-  sudo pip3 install virtualenv
-  ```
-- [VirtualBox](https://www.virtualbox.org/)
-- [Vagrant](https://www.vagrantup.com/)
-
-## Mise en place de l'environnement local
-
-Ce projet utilise un environnement virtuel Python pour isoler les dépendances. Pour l'initialiser, exécutez depuis la racine du projet :
+## Installation
 
 ```bash
+# 1. Cloner le dépôt
+git clone https://github.com/Hadis010/efrei-ansible-devops.git
+cd efrei-ansible-devops
+
+# 2. Activer le virtualenv et installer les dépendances
 source venv.sh
-```
 
-Cette commande crée l'environnement virtuel, l'active et installe toutes les dépendances Python nécessaires (Ansible, Molecule, etc.).
-
-Des fonctions utilitaires sont ensuite disponibles dans le terminal :
-- `download_galaxy` — télécharge les rôles Ansible déclarés dans `roles/requirements.yml`
-- `rebuild_env` — recrée l'environnement virtuel from scratch
-- `deactivate` — quitte l'environnement virtuel
-
-## Développement et tests avec Molecule
-
-Ce projet intègre [Molecule](https://molecule.readthedocs.io/en/stable/) pour tester les rôles Ansible dans des machines virtuelles éphémères.
-
-| Commande | Description |
-|---|---|
-| `molecule converge` | Crée la VM de test et applique les playbooks |
-| `molecule login` | Se connecte en SSH à la machine de test |
-| `molecule verify` | Exécute les tests de vérification |
-| `molecule test` | Lance le cycle de test complet (create → converge → verify → destroy) |
-
-> Avant tout commit, vérifiez que tous les tests passent avec `molecule test`.
-
-## Structure du projet
-
-```
-.
-├── hosts/              # Inventaires (machines cibles)
-│   └── hosts_dev       # Inventaire de développement (utilisé par Molecule)
-├── group_vars/         # Variables par groupe d'hôtes
-│   ├── all.yml
-│   ├── api.yml
-│   └── database.yml
-├── roles/              # Rôles Ansible locaux
-│   └── requirements.yml
-├── molecule/           # Configuration des tests Molecule
-├── playbook_install.yml # Playbook principal de déploiement
-└── venv.sh             # Script d'initialisation de l'environnement
-```
-
-## Déploiement
-
-### 1. Activer l'environnement virtuel
-
-```bash
-source venv.sh
-```
-
-### 2. Télécharger les rôles Galaxy
-
-```bash
+# 3. Installer les roles et collections Galaxy
 download_galaxy
 ```
 
-### 3. Configurer le vault Ansible
-
-Certaines variables sont chiffrées avec [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html).
-Créez un fichier `.devops_vault_pass.txt` à la racine du projet contenant le mot de passe du vault.
-
-Pour ce projet d'exemple, le mot de passe est : `password`
-
-> **Attention :** Ne poussez jamais ce fichier sur un dépôt distant. Ajoutez-le à votre `.gitignore`.
-
-### 4. Lancer le playbook
-
-Voici la commande pour lancer le playbook si une vrai machine est configuré (ce qui n'est pas le cas pour ce TP).
-```bash
-ansible-playbook -i hosts/hosts_dev -u devops playbook_install.yml
-```
-
-## Gestion des vaults
+## Lancer le projet
 
 ```bash
-# Créer un nouveau vault
-ansible-vault create group_vars/devops_dev/vault.yml
+# Tout déployer en une commande (create + converge + verify + destroy)
+molecule test
 
-# Editer un vault existant
-ansible-vault edit group_vars/devops_dev/vault.yml
-
-# Consulter un vault
-ansible-vault view group_vars/devops_dev/vault.yml
+# Ou par commande
+molecule create      # Créer la VM
+molecule converge    # Déployer la stack
+molecule verify      # Lancer les tests
+molecule destroy     # Supprimer la VM
 ```
+
+## Structure du projet
+
+efrei-ansible-devops/
+├── playbook_install.yml       # Playbook principal
+├── hosts/
+│   ├── hosts_dev              # Inventaire dev
+│   └── hosts_staging          # Inventaire staging
+├── group_vars/
+│   ├── all.yml                # Variables globales
+│   ├── devops_dev/            # Variables environnement dev
+│   └── devops_staging/        # Variables environnement staging
+├── roles/
+│   ├── database/              # Installation MySQL
+│   ├── runtime/               # Installation Node.js
+│   ├── app/                   # Déploiement API Express
+│   ├── webserver/             # Configuration Nginx
+│   ├── maildev/               # Serveur SMTP de dev
+│   ├── postfix/               # Serveur mail de production
+│   ├── backup/                # Backup automatisé
+│   └── certbot/               # Certificat TLS Let's Encrypt
+└── molecule/
+└── default/               # Tests Molecule + Testinfra
+
+## Bonus implémentés
+
+- **Ansible Vault** — chiffrement du mot de passe MySQL
+- **Multi-environnements** — dev et staging avec variables distinctes
+- **Maildev** — serveur SMTP de développement (interface web port 8025)
+- **Postfix** — envoi d'emails en production
+- **Backup automatisé** — dump MySQL + archive app, rotation 7 jours, cron 1h
+- **Certbot** — installation Let's Encrypt avec renouvellement automatique
+
+## Tests
+
+15 tests Testinfra couvrant tous les services :
+
+```bash
+molecule verify
+# 15 passed
+```
+
+## Accès aux services (après molecule converge)
+
+| Service | URL |
+|---|---|
+| API Todos | http://172.21.80.1/todos |
+| Maildev | http://172.21.80.1:8025 |
+
+## Vault
+
+Le mot de passe de la base de données est chiffré avec Ansible Vault.
