@@ -46,3 +46,17 @@ def test_postfix_running(host):
 def test_postfix_smtp_port(host):
     port = host.socket("tcp://127.0.0.1:25")
     assert port.is_listening
+
+def test_backup_directory_exists(host):
+    d = host.file("/var/backups/todos")
+    assert d.exists
+    assert d.is_directory
+
+def test_backup_script_exists(host):
+    f = host.file("/usr/local/bin/todos-backup.sh")
+    assert f.exists
+    assert f.mode == 0o750
+
+def test_backup_cron_exists(host):
+    cron = host.run("crontab -l -u root")
+    assert "todos-backup" in cron.stdout
