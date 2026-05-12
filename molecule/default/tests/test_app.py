@@ -60,3 +60,7 @@ def test_backup_script_exists(host):
 def test_backup_cron_exists(host):
     cron = host.run("crontab -l -u root")
     assert "todos-backup" in cron.stdout
+
+def test_certbot_installed(host):
+    certbot = host.run("certbot --version")
+    assert certbot.rc == 0
