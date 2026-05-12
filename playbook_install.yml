@@ -1,8 +1,18 @@
 ---
-- name: Deploy Todos API stack
-  hosts: all
+# Environnement dev
+- name: Deploy Todos API stack (dev)
+  hosts: devops_dev
   become: true
+  roles:
+    - role: database
+    - role: runtime
+    - role: app
+    - role: webserver
 
+# Environnement staging
+- name: Deploy Todos API stack (staging)
+  hosts: devops_staging
+  become: true
   roles:
     - role: database
     - role: runtime
