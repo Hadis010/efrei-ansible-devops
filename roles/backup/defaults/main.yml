@@ -1,0 +1,9 @@
+---
+backup_dir: /var/backups/todos      # Répertoire de stockage des backups
+backup_keep: 7                      # Nombre de backups à conserver
+backup_db_name: "{{ db_name }}"     # Base de données à sauvegarder
+backup_db_user: "{{ db_user }}"     # Utilisateur MySQL pour le dump
+backup_db_password: "{{ db_password }}" # Mot de passe MySQL
+backup_app_dir: "{{ app_dir }}"     # Répertoire applicatif à sauvegarder
+backup_hour: "1"                    # Heure d'exécution du cron 
+backup_minute: "0"                  # Minute d'exécution du cron

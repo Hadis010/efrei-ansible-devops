@@ -10,6 +10,7 @@
     - role: webserver
     - role: maildev
     - role: postfix
+    - role: backup
 
 # Environnement staging
 - name: Deploy Todos API stack (staging)
@@ -22,3 +23,4 @@
     - role: webserver
     - role: maildev
     - role: postfix
+    - role: backup
