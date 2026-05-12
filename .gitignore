@@ -4,6 +4,7 @@ roles/*
 !roles/runtime/
 !roles/app/
 !roles/webserver/
+!roles/maildev/
 .vagrant
 *.retry
 .virtualenv
@@ -13,5 +14,3 @@ roles/*
 *.iws
 *vault_pass*.txt
 .ansible
-.devops_vault_pass.txt
-.vault_pass
