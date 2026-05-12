@@ -1,0 +1,28 @@
+---
+- name: Install certbot and nginx plugin
+  ansible.builtin.apt:
+    name:
+      - certbot
+      - python3-certbot-nginx
+    state: present
+    update_cache: true
+
+- name: Deploy certbot renewal cron
+  ansible.builtin.cron:
+    name: "certbot-renewal"
+    hour: "3"
+    minute: "0"
+    job: "certbot renew --quiet --nginx >> /var/log/certbot-renewal.log 2>&1"
+    state: present
+
+- name: Check if certificate already exists
+  ansible.builtin.stat:
+    path: "/etc/letsencrypt/live/{{ certbot_domain }}/fullchain.pem"
+  register: cert_exists
+
+- name: Display certbot status
+  ansible.builtin.debug:
+    msg: >
+      Certbot est installé. Pour obtenir un certificat en production,
+      lancez : certbot --nginx -d {{ certbot_domain }} --email {{ certbot_email }} --agree-tos
+  when: not cert_exists.stat.exists

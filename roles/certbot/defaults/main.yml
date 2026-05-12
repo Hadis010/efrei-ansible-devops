@@ -1,0 +1,4 @@
+---
+certbot_email: admin@todos.local        # Email pour les notifications
+certbot_domain: todos.local             # Nom de domaine à certifier
+certbot_nginx_config: /etc/nginx/sites-available/todos-api  # Config nginx 
